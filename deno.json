@@ -1,0 +1,21 @@
+{
+  "name": "@quentinadam/decimal",
+  "version": "0.1.0",
+  "exports": "./Decimal.ts",
+  "imports": {
+    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.6"
+  },
+  "publish": {
+    "exclude": [
+      ".github/",
+      ".vscode/"
+    ]
+  },
+  "fmt": {
+    "singleQuote": true,
+    "lineWidth": 120
+  },
+  "tasks": {
+    "check": "deno check **/*.ts"
+  }
+}
