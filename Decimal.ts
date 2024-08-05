@@ -15,7 +15,7 @@ export default class Decimal {
   /**
    * Constructs a new Decimal instance, from a `mantissa` and an `exponent`.
    *
-   * Conceptually, a Decimal instance represents the value `mantissa * 10 ** exponent`.
+   * Conceptually, a Decimal instance represents the value `mantissa * 10 ^ exponent`.
    *
    * The constructor normalizes the mantissa and exponent, ensuring that the mantissa is as small as possible.
    *
@@ -38,6 +38,15 @@ export default class Decimal {
       this.mantissa = mantissa;
       this.exponent = exponent;
     }
+  }
+
+  /**
+   * Custom inspection method for Deno which returns the string representation of the Decimal instance.
+   *
+   * @returns A string representing the Decimal value.
+   */
+  [Symbol.for('Deno.customInspect')](): string {
+    return this.toString();
   }
 
   /**
@@ -522,15 +531,6 @@ export default class Decimal {
       const string = this.mantissa.toString().padStart(-this.exponent + 1, '0');
       return string.slice(0, this.exponent) + '.' + string.slice(this.exponent);
     }
-  }
-
-  /**
-   * Custom inspection method for Deno which the string representation of the Decimal instance.
-   *
-   * @returns A string representing the Decimal value.
-   */
-  [Symbol.for('Deno.customInspect')](): string {
-    return this.toString();
   }
 
   /**
