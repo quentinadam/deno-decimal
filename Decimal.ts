@@ -1,6 +1,9 @@
 import assert from '@quentinadam/assert';
 
-type DecimalType = Decimal | number | bigint | string;
+/**
+ * A type alias representing the different types a Decimal instance can be created from.
+ */
+export type DecimalType = Decimal | number | bigint | string;
 
 /**
  * A class to represent arbitrary precision decimal numbers.
@@ -9,6 +12,19 @@ export default class Decimal {
   readonly mantissa: bigint;
   readonly exponent: number;
 
+  /**
+   * Constructs a new Decimal instance, from a `mantissa` and an `exponent`.
+   *
+   * Conceptually, a Decimal instance represents the value `mantissa * 10 ** exponent`.
+   *
+   * The constructor normalizes the mantissa and exponent, ensuring that the mantissa is as small as possible.
+   *
+   * If the mantissa is 0, the exponent is set to 0.
+   *
+   * @param mantissa The mantissa, represented as a bigint.
+   * @param exponent The exponent, representing the power of 10 by which the mantissa is multiplied. Defaults to 0.
+   * @throws Will throw an error if the exponent is not an integer.
+   */
   constructor(mantissa: bigint, exponent = 0) {
     assert(Number.isInteger(exponent), `Exponent must be an integer, got ${exponent}`);
     if (mantissa === 0n) {
@@ -26,6 +42,7 @@ export default class Decimal {
 
   /**
    * Returns the absolute value of the current Decimal instance.
+   *
    * @returns A new Decimal instance representing the absolute value.
    */
   abs(): Decimal {
@@ -34,6 +51,7 @@ export default class Decimal {
 
   /**
    * Adds the provided value to the current Decimal instance.
+   *
    * @param value The value to add.
    * @returns A new Decimal instance representing the sum.
    */
@@ -45,6 +63,7 @@ export default class Decimal {
 
   /**
    * Rounds the current value up towards positive infinity to the nearest multiple of the specified precision.
+   *
    * @param precision The precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
    * @returns A new Decimal instance representing the rounded value.
    */
@@ -58,6 +77,7 @@ export default class Decimal {
 
   /**
    * Compares the current Decimal instance with the provided value.
+   *
    * @param other The value to compare with.
    * @returns 0 if both values are equal, 1 if the current instance is greater, and -1 if it is less.
    */
@@ -67,8 +87,16 @@ export default class Decimal {
 
   /**
    * Divides the current Decimal instance by the provided value.
+   *
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
+   *
    * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
+   *
+   * ```ts
+   * Decimal.from(1).div(3); // Throws
+   * Decimal.from(1).div(3, 2); // Returns 0.33
+   * ```
+   *
    * @param value The value to divide by.
    * @param significantDigits The number of significant digits to use in the result.
    * @returns A new Decimal instance representing the result of the division.
@@ -114,6 +142,7 @@ export default class Decimal {
 
   /**
    * Multiplies the current Decimal instance by 10 raised to the provided integer exponent.
+   *
    * @param exponent The integer exponent to raise 10 to.
    * @returns A new Decimal instance representing the result.
    */
@@ -123,6 +152,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is equal to the provided value.
+   *
    * @param value The value to compare with.
    * @returns True if the values are equal, false otherwise.
    */
@@ -134,6 +164,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is equal to zero.
+   *
    * @returns True if the value is zero, false otherwise.
    */
   eq0(): boolean {
@@ -142,6 +173,7 @@ export default class Decimal {
 
   /**
    * Rounds the current value down towards negative infinity to the nearest multiple of the specified precision.
+   *
    * @param precision The precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
    * @returns A new Decimal instance representing the rounded value.
    */
@@ -155,6 +187,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is greater than the provided value.
+   *
    * @param value The value to compare with.
    * @returns True if the current instance is greater, false otherwise.
    */
@@ -166,6 +199,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is greater than zero.
+   *
    * @returns True if the value is greater than zero, false otherwise.
    */
   gt0(): boolean {
@@ -174,6 +208,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is greater than or equal to the provided value.
+   *
    * @param value The value to compare with.
    * @returns True if the current instance is greater or equal, false otherwise.
    */
@@ -185,6 +220,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is greater than or equal to zero.
+   *
    * @returns True if the value is greater than or equal to zero, false otherwise.
    */
   gte0(): boolean {
@@ -195,12 +231,14 @@ export default class Decimal {
    * Returns the multiplicative inverse of the current Decimal instance.
    *
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
+   *
    * If you need to invert such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
    *
    * ```ts
    * Decimal.from(3).inv(); // Throws
    * Decimal.from(3).inv(2); // Returns 0.33
    * ```
+   *
    * @param significantDigits The number of significant digits to use in the result.
    * @returns A new Decimal instance representing the inverse.
    */
@@ -210,6 +248,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is an integer.
+   *
    * @returns True if the value is an integer, false otherwise.
    */
   isInteger(): boolean {
@@ -218,6 +257,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is less than the provided value.
+   *
    * @param value The value to compare with.
    * @returns True if the current instance is less, false otherwise.
    */
@@ -229,6 +269,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is less than zero.
+   *
    * @returns True if the value is less than zero, false otherwise.
    */
   lt0(): boolean {
@@ -237,6 +278,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is less than or equal to the provided value.
+   *
    * @param value The value to compare with.
    * @returns True if the current instance is less or equal, false otherwise.
    */
@@ -248,6 +290,7 @@ export default class Decimal {
 
   /**
    * Checks if the current Decimal instance is less than or equal to zero.
+   *
    * @returns True if the value is less than or equal to zero, false otherwise.
    */
   lte0(): boolean {
@@ -256,6 +299,7 @@ export default class Decimal {
 
   /**
    * Returns the order of magnitude (defined as `floor(log10(abs(value)))`) of the current Decimal instance.
+   *
    * @returns A number representing the order of magnitude.
    */
   magnitude(): number {
@@ -273,6 +317,7 @@ export default class Decimal {
 
   /**
    * Returns the remainder when dividing the current Decimal instance by the provided value.
+   *
    * @param value The value to divide by.
    * @returns A new Decimal instance representing the remainder.
    */
@@ -289,6 +334,7 @@ export default class Decimal {
 
   /**
    * Multiplies the current Decimal instance by the provided value.
+   *
    * @param value The value to multiply by.
    * @returns A new Decimal instance representing the product.
    */
@@ -299,6 +345,7 @@ export default class Decimal {
 
   /**
    * Negates the current Decimal instance.
+   *
    * @returns A new Decimal instance representing the negated value.
    */
   neg(): Decimal {
@@ -307,6 +354,7 @@ export default class Decimal {
 
   /**
    * Checks if the current value is not equal to the provided value.
+   *
    * @param value The value to compare against.
    * @returns True if the values are not equal, false otherwise.
    */
@@ -316,6 +364,7 @@ export default class Decimal {
 
   /**
    * Checks if the current value is not equal to zero.
+   *
    * @returns True if the value is not zero, false otherwise.
    */
   neq0(): boolean {
@@ -324,6 +373,7 @@ export default class Decimal {
 
   /**
    * Raises the current Decimal instance to the power of the provided integer exponent.
+   *
    * @param value The integer exponent to raise to.
    * @returns A new Decimal instance representing the result of the exponentiation.
    */
@@ -345,7 +395,9 @@ export default class Decimal {
 
   /**
    * Rounds the current value towards the nearest multiple of the specified precision.
+   *
    * If the current value is exactly halfway between two multiples of the precision, it is rounded up towards positive infinity.
+   *
    * @param precision The precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
    * @returns A new Decimal instance representing the rounded value.
    */
@@ -355,6 +407,7 @@ export default class Decimal {
 
   /**
    * Returns the sign of the current value as a Decimal instance.
+   *
    * @returns A Decimal instance representing the sign: 1 for positive, -1 for negative, and 0 for zero.
    */
   sign(): Decimal {
@@ -369,6 +422,7 @@ export default class Decimal {
 
   /**
    * Subtracts the provided value from the current Decimal instance.
+   *
    * @param value The value to subtract.
    * @returns A new Decimal instance representing the result of the subtraction.
    */
@@ -380,7 +434,9 @@ export default class Decimal {
 
   /**
    * Converts the current Decimal instance to a bigint, if it is an integer.
-   * Throws an error if the Decimal instance is not an integer.
+   *
+   * Throws if the Decimal instance is not an integer.
+   *
    * @returns A bigint representing the integer value of the Decimal instance.
    */
   toBigInt(): bigint {
@@ -390,6 +446,7 @@ export default class Decimal {
 
   /**
    * Converts the current Decimal instance to a fixed-point notation string.
+   *
    * @param precision The number of decimal places to include in the result.
    * @returns A string representing the Decimal instance in fixed-point notation.
    */
@@ -410,7 +467,9 @@ export default class Decimal {
 
   /**
    * Converts the current value to a fraction represented by a numerator and denominator.
+   *
    * Simplifies the fraction to its lowest terms.
+   *
    * @returns An object with numerator and denominator properties.
    */
   toFraction(): { numerator: bigint; denominator: bigint } {
@@ -430,6 +489,7 @@ export default class Decimal {
 
   /**
    * Converts the current Decimal value to a JSON string.
+   *
    * @returns A string representing the Decimal value in JSON format.
    */
   toJSON(): string {
@@ -438,7 +498,9 @@ export default class Decimal {
 
   /**
    * Converts the current value to a number.
+   *
    * This may lose precision if the Decimal cannot be exactly represented as a number.
+   *
    * @returns The number representation of the current Decimal value.
    */
   toNumber(): number {
@@ -447,6 +509,7 @@ export default class Decimal {
 
   /**
    * Converts the current value to a string.
+   *
    * @returns A string representing the current Decimal value.
    */
   toString(): string {
@@ -462,19 +525,32 @@ export default class Decimal {
   }
 
   /**
-   * Custom inspection method for Deno, returns the string representation of the Decimal.
+   * Custom inspection method for Deno which the string representation of the Decimal instance.
+   *
    * @returns A string representing the Decimal value.
    */
   [Symbol.for('Deno.customInspect')](): string {
     return this.toString();
   }
 
+  /**
+   * A static constant representing the decimal value -1.
+   */
   static minusOne: Decimal = new Decimal(-1n);
+
+  /**
+   * A static constant representing the decimal value 1.
+   */
   static one: Decimal = new Decimal(1n);
+
+  /**
+   * A static constant representing the decimal value 0.
+   */
   static zero: Decimal = new Decimal(0n);
 
   /**
    * Adds multiple values together.
+   *
    * @param values An array of values to add.
    * @returns A new Decimal instance representing the sum of the values.
    */
@@ -486,8 +562,15 @@ export default class Decimal {
 
   /**
    * Divides one value by another.
+   *
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
+   *
    * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
+   *
+   * ```ts
+   * Decimal.div(1, 3); // Throws
+   * Decimal.div(1, 3, 2); // Returns 0.33
+   * ```
    * @param dividend The value to divide.
    * @param divisor The value to divide by.
    * @param significantDigits The number of significant digits to use in the result.
@@ -499,6 +582,7 @@ export default class Decimal {
 
   /**
    * Creates a Decimal instance from a string (in standard or scientific notation), a number or a bigint.
+   *
    * @param value The value to convert.
    * @returns A Decimal instance representing the provided value.
    */
@@ -517,8 +601,9 @@ export default class Decimal {
 
   /**
    * Creates a Decimal instance from a fraction.
-   * Simplifies the fraction to its lowest terms.
-   * Throws an error if the fraction cannot be represented with a fixed number of decimals.
+   *
+   * Throws if the fraction cannot be represented with a fixed number of decimals.
+   *
    * @param numerator The numerator of the fraction.
    * @param denominator The denominator of the fraction.
    * @returns A Decimal instance representing the fraction.
@@ -553,6 +638,7 @@ export default class Decimal {
 
   /**
    * Creates a Decimal instance from a bigint.
+   *
    * @param value The bigint value to convert.
    * @returns A Decimal instance representing the provided bigint value.
    */
@@ -562,6 +648,7 @@ export default class Decimal {
 
   /**
    * Creates a Decimal instance from a number.
+   *
    * @param value The number value to convert.
    * @returns A Decimal instance representing the provided number.
    */
@@ -575,6 +662,7 @@ export default class Decimal {
 
   /**
    * Creates a Decimal instance from a string (in standard or scientific notation).
+   *
    * @param string The string value to convert.
    * @returns A Decimal instance representing the provided string.
    */
@@ -602,6 +690,7 @@ export default class Decimal {
 
   /**
    * Finds the maximum value among the provided values.
+   *
    * @param first The first value to compare.
    * @param values Additional values to compare.
    * @returns A new Decimal instance representing the maximum value.
@@ -614,6 +703,7 @@ export default class Decimal {
 
   /**
    * Finds the minimum value among the provided values.
+   *
    * @param first The first value to compare.
    * @param values Additional values to compare.
    * @returns A new Decimal instance representing the minimum value.
@@ -626,6 +716,7 @@ export default class Decimal {
 
   /**
    * Multiplies multiple values together.
+   *
    * @param values An array of values to multiply.
    * @returns A new Decimal instance representing the product of the values.
    */
@@ -637,6 +728,7 @@ export default class Decimal {
 
   /**
    * Subtracts one value from another.
+   *
    * @param minuend The value to subtract from.
    * @param subtrahend The value to subtract.
    * @returns A new Decimal instance representing the result of the subtraction.
@@ -647,6 +739,7 @@ export default class Decimal {
 
   /**
    * Calculates the greatest common divisor (GCD) of two values.
+   *
    * @param a The first value.
    * @param b The second value.
    * @returns A new Decimal instance representing the GCD of the two values.
