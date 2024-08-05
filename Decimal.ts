@@ -155,7 +155,7 @@ export default class Decimal {
    * @param exponent The integer exponent to raise 10 to.
    * @returns A new Decimal instance representing the result.
    */
-  e(exponent: bigint | number): Decimal {
+  e(exponent: number): Decimal {
     return this.mul(new Decimal(10n).pow(exponent));
   }
 
@@ -386,19 +386,16 @@ export default class Decimal {
    * @param value The integer exponent to raise to.
    * @returns A new Decimal instance representing the result of the exponentiation.
    */
-  pow(value: bigint | number): Decimal {
-    if (typeof value === 'number') {
-      assert(Number.isInteger(value), `Exponent must be an integer, got ${value}`);
-      value = BigInt(value);
-    }
-    if (value === 0n) {
+  pow(value: number): Decimal {
+    assert(Number.isInteger(value), `Exponent must be an integer, got ${value}`);
+    if (value === 0) {
       return Decimal.one;
-    } else if (value === 1n) {
+    } else if (value === 1) {
       return this;
-    } else if (value < 0n) {
+    } else if (value < 0) {
       return this.inv().pow(-value);
     } else {
-      return new Decimal(this.mantissa ** value, this.exponent * 2);
+      return new Decimal(this.mantissa ** BigInt(value), this.exponent * value);
     }
   }
 

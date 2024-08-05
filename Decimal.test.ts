@@ -385,21 +385,29 @@ Deno.test('mod', () => {
 
 Deno.test('pow', () => {
   const vectors: ({ a: Decimal; b: number } & ({ success: true; output: Decimal } | { success: false }))[] = [
+    { a: Decimal.from(2), b: 3, success: true, output: Decimal.from(8) },
+    { a: Decimal.from(2), b: 2, success: true, output: Decimal.from(4) },
     { a: Decimal.from(2), b: 1, success: true, output: Decimal.from(2) },
     { a: Decimal.from(2), b: 0, success: true, output: Decimal.from(1) },
     { a: Decimal.from(2), b: 2, success: true, output: Decimal.from(4) },
     { a: Decimal.from(2), b: -1, success: true, output: Decimal.from(0.5) },
     { a: Decimal.from(2), b: -2, success: true, output: Decimal.from(0.25) },
+    { a: Decimal.from(2), b: -3, success: true, output: Decimal.from(0.125) },
+    { a: Decimal.from(0.2), b: 3, success: true, output: Decimal.from(0.008) },
+    { a: Decimal.from(0.2), b: 2, success: true, output: Decimal.from(0.04) },
     { a: Decimal.from(0.2), b: 1, success: true, output: Decimal.from(0.2) },
     { a: Decimal.from(0.2), b: 0, success: true, output: Decimal.from(1) },
     { a: Decimal.from(0.2), b: 2, success: true, output: Decimal.from(0.04) },
     { a: Decimal.from(0.2), b: -1, success: true, output: Decimal.from(5) },
     { a: Decimal.from(0.2), b: -2, success: true, output: Decimal.from(25) },
+    { a: Decimal.from(0.2), b: -3, success: true, output: Decimal.from(125) },
+    { a: Decimal.from(3), b: 3, success: true, output: Decimal.from(27) },
+    { a: Decimal.from(3), b: 2, success: true, output: Decimal.from(9) },
     { a: Decimal.from(3), b: 1, success: true, output: Decimal.from(3) },
     { a: Decimal.from(3), b: 0, success: true, output: Decimal.from(1) },
-    { a: Decimal.from(3), b: 2, success: true, output: Decimal.from(9) },
     { a: Decimal.from(3), b: -1, success: false },
     { a: Decimal.from(3), b: -2, success: false },
+    { a: Decimal.from(3), b: -3, success: false },
   ];
   for (const vector of vectors) {
     const { a, b } = vector;
@@ -407,7 +415,10 @@ Deno.test('pow', () => {
       const output = vector.output;
       const vectors = [{ a, b, output }, { a: a.neg(), b, output: b % 2 == 0 ? output : output.neg() }];
       for (const { a, b, output } of vectors) {
-        assert(a.pow(b).eq(output));
+        assert(
+          a.pow(b).eq(output),
+          `a: ${a.toString()}, b: ${b}, output: ${output.toString()}, result: ${a.pow(b).toString()}`,
+        );
       }
     } else {
       assert(wrap(() => a.pow(b)) instanceof Error);
@@ -574,5 +585,21 @@ Deno.test('lte0', () => {
   ];
   for (const { input, output } of vectors) {
     assert(input.lte0() === output);
+  }
+});
+
+Deno.test('e', () => {
+  const vectors = [
+    { input: Decimal.from(12.3), exponent: 3, output: Decimal.from(12300) },
+    { input: Decimal.from(12.3), exponent: 2, output: Decimal.from(1230) },
+    { input: Decimal.from(12.3), exponent: 1, output: Decimal.from(123) },
+    { input: Decimal.from(12.3), exponent: 0, output: Decimal.from(12.3) },
+    { input: Decimal.from(12.3), exponent: -1, output: Decimal.from(1.23) },
+    { input: Decimal.from(12.3), exponent: -2, output: Decimal.from(0.123) },
+    { input: Decimal.from(12.3), exponent: -3, output: Decimal.from(0.0123) },
+  ];
+  for (const { input, exponent, output } of vectors) {
+    assert(input.e(exponent).eq(output));
+    assert(input.neg().e(exponent).eq(output.neg()));
   }
 });

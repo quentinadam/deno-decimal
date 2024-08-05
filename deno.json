@@ -1,6 +1,6 @@
 {
   "name": "@quentinadam/decimal",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "exports": "./Decimal.ts",
   "imports": {
     "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.6"
