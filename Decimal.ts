@@ -193,10 +193,10 @@ export default class Decimal {
 
   /**
    * Returns the multiplicative inverse of the current Decimal instance.
-   * 
+   *
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
    * If you need to invert such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
-   * 
+   *
    * ```ts
    * Decimal.from(3).inv(); // Throws
    * Decimal.from(3).inv(2); // Returns 0.33
