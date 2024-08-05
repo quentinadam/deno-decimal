@@ -45,7 +45,7 @@ export default class Decimal {
 
   /**
    * Rounds the current value up towards positive infinity to the nearest multiple of the specified precision.
-   * @param precision The optional precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
+   * @param precision The precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
    * @returns A new Decimal instance representing the rounded value.
    */
   ceil(precision: DecimalType = Decimal.one): Decimal {
@@ -68,9 +68,9 @@ export default class Decimal {
   /**
    * Divides the current Decimal instance by the provided value.
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
-   * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits.
+   * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
    * @param value The value to divide by.
-   * @param significantDigits The optional number of significant digits to use in the result.
+   * @param significantDigits The number of significant digits to use in the result.
    * @returns A new Decimal instance representing the result of the division.
    */
   div(value: DecimalType, significantDigits?: number): Decimal {
@@ -142,7 +142,7 @@ export default class Decimal {
 
   /**
    * Rounds the current value down towards negative infinity to the nearest multiple of the specified precision.
-   * @param precision The optional precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
+   * @param precision The precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
    * @returns A new Decimal instance representing the rounded value.
    */
   floor(precision: DecimalType = Decimal.one): Decimal {
@@ -193,9 +193,15 @@ export default class Decimal {
 
   /**
    * Returns the multiplicative inverse of the current Decimal instance.
+   * 
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
-   * If you need to invert such a value, use the optional `significantDigits` parameter to specify the number of significant digits.
-   * @param significantDigits The optional number of significant digits to use in the result.
+   * If you need to invert such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
+   * 
+   * ```ts
+   * Decimal.from(3).inv(); // Throws
+   * Decimal.from(3).inv(2); // Returns 0.33
+   * ```
+   * @param significantDigits The number of significant digits to use in the result.
    * @returns A new Decimal instance representing the inverse.
    */
   inv(significantDigits?: number): Decimal {
@@ -340,7 +346,7 @@ export default class Decimal {
   /**
    * Rounds the current value towards the nearest multiple of the specified precision.
    * If the current value is exactly halfway between two multiples of the precision, it is rounded up towards positive infinity.
-   * @param precision The optional precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
+   * @param precision The precision to round to. Defaults to `Decimal.one`, meaning it rounds to the nearest integer.
    * @returns A new Decimal instance representing the rounded value.
    */
   round(precision: DecimalType = Decimal.one): Decimal {
@@ -374,7 +380,7 @@ export default class Decimal {
 
   /**
    * Converts the current Decimal instance to a bigint, if it is an integer.
-   * @throws Will throw an error if the Decimal instance is not an integer.
+   * Throws an error if the Decimal instance is not an integer.
    * @returns A bigint representing the integer value of the Decimal instance.
    */
   toBigInt(): bigint {
@@ -481,10 +487,10 @@ export default class Decimal {
   /**
    * Divides one value by another.
    * Throws if the resulting value cannot be represented with a fixed number of decimals (like 1/3).
-   * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits.
+   * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
    * @param dividend The value to divide.
    * @param divisor The value to divide by.
-   * @param significantDigits The optional number of significant digits in the result.
+   * @param significantDigits The number of significant digits to use in the result.
    * @returns A new Decimal instance representing the quotient.
    */
   static div(dividend: DecimalType, divisor: DecimalType, significantDigits?: number): Decimal {
@@ -516,7 +522,6 @@ export default class Decimal {
    * @param numerator The numerator of the fraction.
    * @param denominator The denominator of the fraction.
    * @returns A Decimal instance representing the fraction.
-   * @throws Will throw an error if the fraction cannot be represented with a fixed number of decimals.
    */
   static fromFraction({ numerator, denominator }: { numerator: bigint; denominator: bigint }): Decimal {
     if (denominator < 0n) {
