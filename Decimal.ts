@@ -112,7 +112,10 @@ export default class Decimal {
    */
   div(value: DecimalType, significantDigits?: number): Decimal {
     value = Decimal.from(value);
-    assert(value.neq0(), `Division by zero`);
+    assert(value.neq0(), 'Division by zero');
+    if (this.eq0()) {
+      return Decimal.zero;
+    }
     if (this.lt0()) {
       return this.neg().div(value, significantDigits).neg();
     }

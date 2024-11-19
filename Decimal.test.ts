@@ -294,12 +294,19 @@ Deno.test('div', () => {
     { a: Decimal.from(1000), b: Decimal.from(0.2), success: true, output: Decimal.from(5000) },
     { a: Decimal.from(1), b: Decimal.from(8), success: true, output: Decimal.from(0.125) },
     { a: Decimal.from(141), b: Decimal.from(376), success: true, output: Decimal.from(0.375) },
+    { a: Decimal.from(0), b: Decimal.from(2), success: true, output: Decimal.from(0) },
+    { a: Decimal.from(0), b: Decimal.from(3), success: true, output: Decimal.from(0) },
+    { a: Decimal.from(0), b: Decimal.from(3), significantDigits: 2, success: true, output: Decimal.from(0) },
+    { a: Decimal.from(1), b: Decimal.from(4), significantDigits: 1, success: true, output: Decimal.from(0.3) },
+    { a: Decimal.from(1), b: Decimal.from(4), significantDigits: 2, success: true, output: Decimal.from(0.25) },
     { a: Decimal.from(1), b: Decimal.from(3), success: false },
     { a: Decimal.from(1000), b: Decimal.from(30), success: false },
     { a: Decimal.from(1), b: Decimal.from(3), significantDigits: 1, success: true, output: Decimal.from(0.3) },
     { a: Decimal.from(1), b: Decimal.from(3), significantDigits: 2, success: true, output: Decimal.from(0.33) },
+    { a: Decimal.from(100), b: Decimal.from(3), significantDigits: 2, success: true, output: Decimal.from(33) },
     { a: Decimal.from(1), b: Decimal.from(6), significantDigits: 1, success: true, output: Decimal.from(0.2) },
     { a: Decimal.from(1), b: Decimal.from(6), significantDigits: 2, success: true, output: Decimal.from(0.17) },
+    { a: Decimal.from(100), b: Decimal.from(6), significantDigits: 2, success: true, output: Decimal.from(17) },
   ];
   for (const vector of vectors) {
     const { a, b, significantDigits } = vector;
