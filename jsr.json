@@ -1,0 +1,15 @@
+{
+  "name": "@quentinadam/decimal",
+  "version": "0.1.2",
+  "license": "MIT",
+  "exports": "./src/decimal.ts",
+  "publish": {
+    "include": [
+      "src",
+      "README.md"
+    ],
+    "exclude": [
+      "src/**/*.test.ts"
+    ]
+  }
+}

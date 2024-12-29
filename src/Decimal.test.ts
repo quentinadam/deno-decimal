@@ -1,5 +1,5 @@
 import assert from '@quentinadam/assert';
-import Decimal from './Decimal.ts';
+import Decimal from '../src/Decimal.ts';
 
 function wrap(fn: () => void) {
   try {
