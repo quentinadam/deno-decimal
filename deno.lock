@@ -1,12 +1,12 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@quentinadam/assert@~0.1.10": "0.1.10",
+    "jsr:@quentinadam/assert@~0.1.11": "0.1.11",
     "npm:typescript@^5.8.3": "5.8.3"
   },
   "jsr": {
-    "@quentinadam/assert@0.1.10": {
-      "integrity": "623eb01c4eb8bbe6420abcbc06792dbd5ca4301c270ac04b3745deac099f70df"
+    "@quentinadam/assert@0.1.11": {
+      "integrity": "d4cc1042fd15528474f9b796d3305a53bab256b325897e1f7b96274d9943aa36"
     }
   },
   "npm": {
@@ -17,7 +17,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@quentinadam/assert@~0.1.10",
+      "jsr:@quentinadam/assert@~0.1.11",
       "npm:typescript@^5.8.3"
     ]
   }
