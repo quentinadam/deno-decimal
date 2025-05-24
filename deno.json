@@ -11,7 +11,7 @@
   "exports": "./src/Decimal.ts",
   "imports": {
     "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.10",
-    "typescript": "npm:typescript@^5.7.2"
+    "typescript": "npm:typescript@^5.8.3"
   },
   "fmt": {
     "singleQuote": true,
