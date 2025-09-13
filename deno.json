@@ -1,6 +1,6 @@
 {
   "name": "@quentinadam/decimal",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A library for working with arbitrary precision decimal numbers",
   "license": "MIT",
   "author": "Quentin Adam",
@@ -10,8 +10,8 @@
   },
   "exports": "./src/Decimal.ts",
   "imports": {
-    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.11",
-    "typescript": "npm:typescript@^5.8.3"
+    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.12",
+    "typescript": "npm:typescript@^5.9.2"
   },
   "fmt": {
     "singleQuote": true,
