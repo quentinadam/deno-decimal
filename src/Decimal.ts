@@ -45,8 +45,13 @@ export default class Decimal {
    *
    * @returns A string representing the Decimal value.
    */
-  [Symbol.for('Deno.customInspect')](): string {
-    return this.toString();
+  [Symbol.for('Deno.customInspect')](inspect: (v: unknown, opts?: unknown) => string, options: unknown): string {
+    const coloredNumber = inspect(0, options);
+    // deno-lint-ignore no-control-regex
+    const start = coloredNumber.match(/^\x1b\[[0-9;]*m/)?.[0] ?? '';
+    // deno-lint-ignore no-control-regex
+    const end = coloredNumber.match(/\x1b\[[0-9;]*m$/)?.[0] ?? '';
+    return `${start}${this.toString()}${end}`;
   }
 
   /**
