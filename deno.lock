@@ -1,24 +1,24 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@quentinadam/assert@~0.1.12": "0.1.12",
-    "npm:typescript@^5.9.2": "5.9.2"
+    "jsr:@quentinadam/assert@~0.1.13": "0.1.13",
+    "npm:typescript@^5.9.3": "5.9.3"
   },
   "jsr": {
-    "@quentinadam/assert@0.1.12": {
-      "integrity": "7479c55f26b80cbf7be4bf5191b1a2c5f7994f0a5c3c9657147e55ae53603910"
+    "@quentinadam/assert@0.1.13": {
+      "integrity": "6a0d7eedd549b6a5028264623990f3288c8d5de532b88a9971bf39743b84d059"
     }
   },
   "npm": {
-    "typescript@5.9.2": {
-      "integrity": "sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==",
+    "typescript@5.9.3": {
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
       "bin": true
     }
   },
   "workspace": {
     "dependencies": [
-      "jsr:@quentinadam/assert@~0.1.12",
-      "npm:typescript@^5.9.2"
+      "jsr:@quentinadam/assert@~0.1.13",
+      "npm:typescript@^5.9.3"
     ]
   }
 }
