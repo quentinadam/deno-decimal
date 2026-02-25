@@ -4,6 +4,8 @@ import assert from '@quentinadam/assert';
  * A type alias representing the different types a Decimal instance can be created from.
  */
 export type DecimalType = Decimal | number | bigint | string;
+type InspectFn = (value: unknown, options?: unknown) => string;
+type InspectOptions = { stylize?: ((text: string, styleType: string) => string) | undefined };
 
 /**
  * A class to represent arbitrary precision decimal numbers.
@@ -45,7 +47,24 @@ export default class Decimal {
    *
    * @returns A string representing the Decimal value.
    */
-  [Symbol.for('Deno.customInspect')](inspect: (v: unknown, opts?: unknown) => string, options: unknown): string {
+  [Symbol.for('Deno.customInspect')](inspect: InspectFn, options: unknown): string {
+    return this.#customInspect(inspect, options);
+  }
+
+  /**
+   * Custom inspection method for Node.js/Bun which returns the string representation of the Decimal instance.
+   *
+   * @returns A string representing the Decimal value.
+   */
+  [Symbol.for('nodejs.util.inspect.custom')](_depth: number, options: unknown, inspect: InspectFn): string {
+    return this.#customInspect(inspect, options);
+  }
+
+  #customInspect(inspect: InspectFn, options: unknown): string {
+    const stylize = (options as InspectOptions).stylize;
+    if (typeof stylize === 'function') {
+      return stylize(this.toString(), 'number');
+    }
     const coloredNumber = inspect(0, options);
     // deno-lint-ignore no-control-regex
     const start = coloredNumber.match(/^\x1b\[[0-9;]*m/)?.[0] ?? '';
