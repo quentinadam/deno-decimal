@@ -10,7 +10,7 @@
   },
   "exports": "./src/Decimal.ts",
   "imports": {
-    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.15",
+    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.16",
     "typescript": "npm:typescript@^5.9.3"
   },
   "fmt": {
