@@ -138,7 +138,7 @@ jobs:
       - name: Install dependencies
         run: deno install
       - name: Build
-        run: deno task --eval "tsc -b"
+        run: deno task --eval "tsc --build"
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
@@ -180,7 +180,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ needs.package_metadata.outputs.tag }}
-        run: gh release create "$TAG" --target "${{ github.sha }}" --generate-notes
+        run: gh release create "$TAG" --repo "${{ github.repository }}" --target "${{ github.sha }}" --generate-notes
   resolve_tag_commit:
     name: Resolve tag commit
     needs: [github_release, package_metadata]
@@ -252,7 +252,7 @@ jobs:
       - name: Install dependencies
         run: deno install
       - name: Build
-        run: deno task --eval "tsc -b"
+        run: deno task --eval "tsc --build"
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
