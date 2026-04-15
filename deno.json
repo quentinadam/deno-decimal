@@ -8,10 +8,10 @@
     "type": "git",
     "url": "git+https://github.com/quentinadam/deno-decimal.git"
   },
-  "exports": "./src/Decimal.ts",
+  "exports": "./src/mod.ts",
   "imports": {
-    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.17",
-    "typescript": "npm:typescript@^5.9.3"
+    "@quentinadam/assert": "jsr:@quentinadam/assert@^0.1.18",
+    "typescript": "npm:typescript@^6.0.2"
   },
   "fmt": {
     "singleQuote": true,

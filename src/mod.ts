@@ -1,4 +1,4 @@
-import assert from '@quentinadam/assert';
+import { assert } from '@quentinadam/assert';
 
 /**
  * A type alias representing the different types a Decimal instance can be created from.
@@ -10,7 +10,7 @@ type InspectOptions = { stylize?: ((text: string, styleType: string) => string) 
 /**
  * A class to represent arbitrary precision decimal numbers.
  */
-export default class Decimal {
+export class Decimal {
   readonly mantissa: bigint;
   readonly exponent: number;
 
@@ -126,7 +126,12 @@ export default class Decimal {
    * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
    *
    * ```ts
-   * Decimal.from(1).div(3); // Throws
+   * try {
+   *   Decimal.from(1).div(3);
+   * } catch (error) {
+   *   // Throws
+   * }
+   *
    * Decimal.from(1).div(3, 2); // Returns 0.33
    * ```
    *
@@ -271,7 +276,12 @@ export default class Decimal {
    * If you need to invert such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
    *
    * ```ts
-   * Decimal.from(3).inv(); // Throws
+   * try {
+   *   Decimal.from(3).inv();
+   * } catch (e) {
+   *   // Throws
+   * }
+   *
    * Decimal.from(3).inv(2); // Returns 0.33
    * ```
    *
@@ -592,7 +602,12 @@ export default class Decimal {
    * If you need to divide by such a value, use the optional `significantDigits` parameter to specify the number of significant digits to use in the result.
    *
    * ```ts
-   * Decimal.div(1, 3); // Throws
+   * try {
+   *   Decimal.div(1, 3);
+   * } catch (error) {
+   *   // Throws
+   * }
+   *
    * Decimal.div(1, 3, 2); // Returns 0.33
    * ```
    * @param dividend The value to divide.

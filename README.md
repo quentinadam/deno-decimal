@@ -12,17 +12,18 @@ Please check the documentation of the `div` function for more details.
 ## Usage
 
 ```ts
-import Decimal from '@quentinadam/decimal';
+import { Decimal } from '@quentinadam/decimal';
+import { assert } from '@quentinadam/assert';
 
 const a = Decimal.from('1.11111111111111111111');
 
 const b = a.mul(2);
 
-console.log(b.toString()); // prints 2.22222222222222222222
+assert(b.toString() === '2.22222222222222222222');
 
 const c = a.add(b);
 
-console.log(c.toString()); // prints 3.33333333333333333333
+assert(c.toString() === '3.33333333333333333333');
 ```
 
 [ci-image]: https://img.shields.io/github/actions/workflow/status/quentinadam/deno-decimal/ci.yml?branch=main&logo=github&style=flat-square
