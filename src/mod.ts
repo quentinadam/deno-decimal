@@ -1,4 +1,5 @@
 import { assert } from '@quentinadam/assert';
+import { ensure } from '@quentinadam/ensure';
 
 /**
  * A type alias representing the different types a Decimal instance can be created from.
@@ -706,25 +707,20 @@ export class Decimal {
    * @returns A Decimal instance representing the provided string.
    */
   static fromString(string: string): Decimal {
-    if (/^(-?[0-9]+|0x[0-9a-f]+|0o[0-7]+|0b[01]+)$/i.test(string)) {
+    if (/^([+-]?[0-9]+|0x[0-9a-f]+|0o[0-7]+|0b[01]+)$/i.test(string)) {
       return this.fromBigInt(BigInt(string));
     }
-    const match = string.match(/^(-?\d+)(?:\.(\d+))?(?:e([+-]?\d+))?$/i);
+    // Either an integer part with an optional fractional part (e.g. `123`, `123.45`) or a fractional part
+    // on its own (e.g. `.45`), so that at least one digit is always required. Both forms allow a sign and
+    // a scientific-notation exponent.
+    const match = string.match(/^([+-]?)(?:(\d+)|(\d*)\.(\d+))(?:e([+-]?\d+))?$/i);
     assert(match !== null, `Could not parse Decimal from string ${string}`);
-    let exponent = 0;
-    if (match[3] !== undefined) {
-      exponent = Number(match[3]);
-    }
-    const mantissa = (() => {
-      if (match[2] !== undefined) {
-        exponent -= match[2].length;
-        return match[1] + match[2];
-      } else {
-        assert(match[1] !== undefined);
-        return match[1];
-      }
-    })();
-    return new Decimal(BigInt(mantissa), exponent);
+    const sign = ensure(match[1]);
+    const integerPart = ensure(match[2] ?? match[3]);
+    const fractionalPart = match[4] ?? '';
+    let exponent = match[5] !== undefined ? Number(match[5]) : 0;
+    exponent -= fractionalPart.length;
+    return new Decimal(BigInt(sign + integerPart + fractionalPart), exponent);
   }
 
   /**

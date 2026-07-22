@@ -42,6 +42,7 @@ Deno.test('fromString', () => {
   const vectors = [
     { input: '123', mantissa: 123n, exponent: 0 },
     { input: '120', mantissa: 12n, exponent: 1 },
+    { input: '10', mantissa: 1n, exponent: 1 },
     { input: '0', mantissa: 0n, exponent: 0 },
     { input: '123.0', mantissa: 123n, exponent: 0 },
     { input: '120.0', mantissa: 12n, exponent: 1 },
@@ -53,13 +54,24 @@ Deno.test('fromString', () => {
     { input: '1230e-2', mantissa: 123n, exponent: -1 },
     { input: '1.23e-2', mantissa: 123n, exponent: -4 },
     { input: '123456789.123456789123456789', mantissa: 123456789123456789123456789n, exponent: -18 },
+    { input: '.1', mantissa: 1n, exponent: -1 },
+    { input: '.125', mantissa: 125n, exponent: -3 },
+    { input: '0.5', mantissa: 5n, exponent: -1 },
+    { input: '.5e2', mantissa: 5n, exponent: 1 },
   ];
   for (const { input, mantissa, exponent } of vectors) {
-    const vectors = [{ input, mantissa }, { input: `-${input}`, mantissa: -mantissa }];
+    const vectors = [
+      { input, mantissa },
+      { input: `-${input}`, mantissa: -mantissa },
+      { input: `+${input}`, mantissa },
+    ];
     for (const { input, mantissa } of vectors) {
       const value = Decimal.fromString(input);
       assert(value.mantissa === mantissa && value.exponent === exponent);
     }
+  }
+  for (const input of ['', '+', '-', '.', '+.', 'e5', '.e5', '1e', '1.', '1.2.3', '++1', 'abc']) {
+    assert(wrap(() => Decimal.fromString(input)) instanceof Error);
   }
 });
 
